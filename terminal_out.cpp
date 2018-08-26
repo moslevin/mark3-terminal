@@ -16,8 +16,8 @@ See license.txt for more information
 #include "driver.h"
 
 #include <stdint.h>
-namespace Mark3 {
-
+namespace Mark3
+{
 //---------------------------------------------------------------------------
 void TerminalOut::Escape(void)
 {
@@ -27,10 +27,8 @@ void TerminalOut::Escape(void)
 //---------------------------------------------------------------------------
 void TerminalOut::WriteString(const char* szStr_)
 {
-    auto *szSrc = szStr_;
-    while (*szSrc != '\0') {
-        WriteByte(static_cast<uint8_t>(*szSrc++));
-    }
+    auto* szSrc = szStr_;
+    while (*szSrc != '\0') { WriteByte(static_cast<uint8_t>(*szSrc++)); }
 }
 
 //---------------------------------------------------------------------------
@@ -82,7 +80,7 @@ void TerminalOut::CursorRight(uint8_t u8Columns_)
 }
 
 //---------------------------------------------------------------------------
-void TerminalOut::SetCursorPos(uint8_t u8X_, uint8_t  /*u8Y_*/)
+void TerminalOut::SetCursorPos(uint8_t u8X_, uint8_t /*u8Y_*/)
 {
     Escape();
     WriteByte('[');
@@ -265,4 +263,4 @@ void TerminalOut::SetBackColor(TerminalColor eColor_)
     WriteByte('0' + static_cast<uint8_t>(eColor_));
     WriteByte('m');
 }
-} //namespace Mark3
+} // namespace Mark3

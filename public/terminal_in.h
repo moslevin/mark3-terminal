@@ -11,10 +11,10 @@
 Copyright (c) 2012 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 =========================================================================== */
-/*!
-    \file terminal_in.h
+/**
+    @file terminal_in.h
 
-    \brief Class for parsing terminal input (i.e. keyboard input).  This includes
+    @brief Class for parsing terminal input (i.e. keyboard input).  This includes
            special keys and modifiers (shift, ctrl, alt).
  */
 
@@ -24,7 +24,6 @@ See license.txt for more information
 
 namespace Mark3
 {
-
 //---------------------------------------------------------------------------
 // Special keys supported by the TerminalIn class
 enum class TerminalKey : uint8_t {
@@ -65,14 +64,7 @@ enum class TerminalKey : uint8_t {
 
 //---------------------------------------------------------------------------
 // Special modifiers, or modifier combinations, that can be applied to keys
-enum class TerminalKeyModifier : uint8_t {
-    None = 0,
-    Shift = 2,
-    Alt = 3,
-    Shift_Alt = 4,
-    Ctrl = 5,
-    Shift_Ctrl = 6
-};
+enum class TerminalKeyModifier : uint8_t { None = 0, Shift = 2, Alt = 3, Shift_Alt = 4, Ctrl = 5, Shift_Ctrl = 6 };
 
 //---------------------------------------------------------------------------
 // States in the TerminalIn state machine
@@ -91,104 +83,104 @@ enum class TerminalParser : uint8_t {
 typedef struct {
     union __attribute__((packed)) {
         TerminalKey eKey;
-        char cChar;
-        uint8_t u8Raw;
+        char        cChar;
+        uint8_t     u8Raw;
     };
     TerminalKeyModifier eModifier;
-    bool bEscaped;
+    bool                bEscaped;
 } KeyVal_t;
 
 //---------------------------------------------------------------------------
-/*!
- * \brief The TerminalIn class
+/**
+ * @brief The TerminalIn class
  *
  * Class to interpret ANSI terminal data.
  *
  */
-class TerminalIn {
+class TerminalIn
+{
 public:
-
-    /*!
-     * \brief ReadLoop
+    /**
+     * @brief ReadLoop
      *
      * Read and interpret a single byte of data of terminal input.
      *
-     * \return true if a byte of data was successfully read and parsed
+     * @return true if a byte of data was successfully read and parsed
      */
     bool ReadLoop();
 
-    /*!
-     * \brief GetLastKey
+    /**
+     * @brief GetLastKey
      *
      * Copy the contents of the last matched key value into the provided
      * input struct.
      *
-     * \param pstKeyVal_ Struct to contain the last matched key value.
+     * @param pstKeyVal_ Struct to contain the last matched key value.
      *
      */
     void GetLastKey(KeyVal_t* pstKeyVal_);
 
-    /*!
-     * \brief Init
+    /**
+     * @brief Init
      *
      * Initialize the object's state machine prior to use.
      */
     void Init() { m_eState = TerminalParser::Begin; }
 
-    /*!
-     * \brief ReadByte
+    /**
+     * @brief ReadByte
      *
      * Attempt to read a byte of input from the terminal interface.
      *
-     * \param pu8Byte_ pointer to the byte of read data.
-     * \return true - byte successfully read, false otherwise.
+     * @param pu8Byte_ pointer to the byte of read data.
+     * @return true - byte successfully read, false otherwise.
      */
     virtual bool ReadByte(uint8_t* pu8Byte_) = 0;
-private:
 
-    /*!
-     * \brief ParseByte
+private:
+    /**
+     * @brief ParseByte
      *
      * Pass a byte of data through the terminal input state machine.
      *
-     * \param u8Input_ Byte to process
-     * \return true - key value was matched with this input byte.  false - further
+     * @param u8Input_ Byte to process
+     * @return true - key value was matched with this input byte.  false - further
      *         data bytes are required to complete the current byte sequence.
      */
     bool ParseByte(uint8_t u8Input_);
 
-    /*!
-     * \brief RunHandler
+    /**
+     * @brief RunHandler
      *
      * Pass the byte of data through the current state.
      *
-     * \param u8Input_ Byte to process
-     * \return true - key value was matched with this input byte.  false - further
+     * @param u8Input_ Byte to process
+     * @return true - key value was matched with this input byte.  false - further
      *         data bytes are required to complete the current byte sequence.
      */
     bool RunHandler(uint8_t u8Input_);
 
-    /*!
-     * \brief AcceptCharacter
+    /**
+     * @brief AcceptCharacter
      *
      * Accept input as a printable ASCII character.
      *
-     * \param cChar_ character to accept.
+     * @param cChar_ character to accept.
      */
     void AcceptCharacter(char cChar_);
 
-    /*!
-     * \brief AcceptSpecial
+    /**
+     * @brief AcceptSpecial
      *
      * Accept input as a non-printable character.  This includes things like
      * tab and linefeed characters, as well as special keys on a typical keyboard
      * (i.e. function keys, home/end/insert/delete).
      *
-     * \param eKey_ Struct containing the key value
+     * @param eKey_ Struct containing the key value
      */
     void AcceptSpecial(TerminalKey eKey_);
 
-    /*!
+    /**
      * Handler functions for all states implemented within the object's
      * state machine.
      */
@@ -211,4 +203,4 @@ private:
 
     KeyVal_t m_uKey;
 };
-} //namespace Mark3
+} // namespace Mark3

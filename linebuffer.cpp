@@ -17,21 +17,22 @@ See license.txt for more information
 #include <stdint.h>
 
 #include "memutil.h"
-namespace Mark3 {
+namespace Mark3
+{
 //---------------------------------------------------------------------------
 void LineBuffer::Clear()
 {
     // Zero buffer
     MemUtil::SetMemory(m_cLineBuffer, 0, sizeof(m_cLineBuffer));
     m_u8LastByteIndex = 0;
-    m_u8CursorIndex = 0;
+    m_u8CursorIndex   = 0;
 }
 
 //---------------------------------------------------------------------------
 bool LineBuffer::WriteCharacter(char cByte_)
 {
     // Insert character at cursor
-    if (m_u8LastByteIndex >= (sizeof(m_cLineBuffer) -1)) {
+    if (m_u8LastByteIndex >= (sizeof(m_cLineBuffer) - 1)) {
         return false;
     }
 
@@ -44,7 +45,7 @@ bool LineBuffer::WriteCharacter(char cByte_)
         }
     }
 
-    m_cLineBuffer[m_u8CursorIndex++] = cByte_;
+    m_cLineBuffer[m_u8CursorIndex++]   = cByte_;
     m_cLineBuffer[++m_u8LastByteIndex] = '\0';
 
     return true;
@@ -83,7 +84,7 @@ uint8_t LineBuffer::Delete()
     if (m_u8LastByteIndex != m_u8CursorIndex) {
         uint8_t i = m_u8CursorIndex;
         while (i != m_u8LastByteIndex) {
-            m_cLineBuffer[i] = m_cLineBuffer[i+1];
+            m_cLineBuffer[i] = m_cLineBuffer[i + 1];
             i++;
         }
     }
@@ -118,7 +119,7 @@ bool LineBuffer::CursorRight()
 //---------------------------------------------------------------------------
 uint8_t LineBuffer::CursorHome()
 {
-    uint8_t u8Diff = m_u8CursorIndex;
+    uint8_t u8Diff  = m_u8CursorIndex;
     m_u8CursorIndex = 0;
     return u8Diff;
 }
@@ -126,8 +127,8 @@ uint8_t LineBuffer::CursorHome()
 //---------------------------------------------------------------------------
 uint8_t LineBuffer::CursorEnd()
 {
-    uint8_t u8Diff = m_u8LastByteIndex - m_u8CursorIndex;
+    uint8_t u8Diff  = m_u8LastByteIndex - m_u8CursorIndex;
     m_u8CursorIndex = m_u8LastByteIndex;
     return u8Diff;
 }
-} //namespace Mark3
+} // namespace Mark3

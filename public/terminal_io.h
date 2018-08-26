@@ -11,10 +11,10 @@
 Copyright (c) 2012 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 =========================================================================== */
-/*!
-    \file terminal_io.h
+/**
+    @file terminal_io.h
 
-    \brief Complete terminal IO class for implementing interactive console
+    @brief Complete terminal IO class for implementing interactive console
            applications.
  */
 #pragma once
@@ -26,10 +26,9 @@ See license.txt for more information
 #include "terminal_out.h"
 namespace Mark3
 {
-
 //---------------------------------------------------------------------------
-/*!
- * \brief The TerminalIO class
+/**
+ * @brief The TerminalIO class
  *
  * Class implementing terminal input and output functionality.
  */
@@ -38,37 +37,37 @@ class TerminalIO : public TerminalIn, public TerminalOut
 public:
     TerminalIO();
 
-    /*!
-     * \brief SetDriver
+    /**
+     * @brief SetDriver
      *
      * Set the Driver object representing the communication channel for the
      * terminal.  Typically a UART driver of some sort.
      *
-     * \param pclDriver_ Pointer to the driver on which the terminal operates.
+     * @param pclDriver_ Pointer to the driver on which the terminal operates.
      */
     void SetDriver(Driver* pclDriver_) { m_pclDriver = pclDriver_; }
 
-    /*!
-     * \brief WriteByte
+    /**
+     * @brief WriteByte
      *
      * Write a raw byte of data to the terminal interface
      *
-     * \param u8Byte_ Byte of data to write
-     * \return true - data was written, false - data could not be written.
+     * @param u8Byte_ Byte of data to write
+     * @return true - data was written, false - data could not be written.
      */
     bool WriteByte(uint8_t u8Byte_);
 
-    /*!
-     * \brief ReadByte
+    /**
+     * @brief ReadByte
      *
      * Read a byte of data from the terminal interface
      *
-     * \param u8Byte_ Byte of data read
-     * \return true - data successfully read, false otherwise
+     * @param u8Byte_ Byte of data read
+     * @return true - data successfully read, false otherwise
      */
-    bool ReadByte(uint8_t *u8Byte_);
-private:
+    bool ReadByte(uint8_t* u8Byte_);
 
+private:
     Driver* m_pclDriver;
 };
-} //namespace Mark3
+} // namespace Mark3
