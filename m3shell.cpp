@@ -15,7 +15,8 @@ See license.txt for more information
 #include "m3shell.h"
 
 #include <stdint.h>
-namespace Mark3 {
+namespace Mark3
+{
 //---------------------------------------------------------------------------
 void M3Shell::AddCommand(CommandHandler* pclHandler_)
 {
@@ -67,13 +68,11 @@ void M3Shell::InputLoop()
                     if (m_clLineBuffer.Backspace()) {
                         m_clTerminal.Backspace();
 
-                        const char* szSrc = m_clLineBuffer.GetBuffer();
-                        uint8_t u8LastIndex = m_clLineBuffer.GetLastIndex();
-                        uint8_t u8Cursor = m_clLineBuffer.GetCursorIndex();
+                        const char* szSrc       = m_clLineBuffer.GetBuffer();
+                        uint8_t     u8LastIndex = m_clLineBuffer.GetLastIndex();
+                        uint8_t     u8Cursor    = m_clLineBuffer.GetCursorIndex();
 
-                        for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) {
-                            m_clTerminal.WriteByte(szSrc[i]);
-                        }
+                        for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) { m_clTerminal.WriteByte(szSrc[i]); }
 
                         m_clTerminal.WriteByte(' ');
                         m_clTerminal.CursorLeft(u8LastIndex - u8Cursor + 1);
@@ -100,13 +99,11 @@ void M3Shell::InputLoop()
                     m_clLineBuffer.Delete();
                     m_clTerminal.ClearFromCursor();
 
-                    const char* szSrc = m_clLineBuffer.GetBuffer();
-                    uint8_t u8LastIndex = m_clLineBuffer.GetLastIndex();
-                    uint8_t u8Cursor = m_clLineBuffer.GetCursorIndex();
+                    const char* szSrc       = m_clLineBuffer.GetBuffer();
+                    uint8_t     u8LastIndex = m_clLineBuffer.GetLastIndex();
+                    uint8_t     u8Cursor    = m_clLineBuffer.GetCursorIndex();
 
-                    for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) {
-                        m_clTerminal.WriteByte(szSrc[i]);
-                    }
+                    for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) { m_clTerminal.WriteByte(szSrc[i]); }
 
                     m_clTerminal.WriteByte(' ');
                     m_clTerminal.CursorLeft(u8LastIndex - u8Cursor + 1);
@@ -124,14 +121,12 @@ void M3Shell::InputLoop()
 
                 m_clTerminal.ClearFromCursor();
 
-                const char* szSrc = m_clLineBuffer.GetBuffer();
-                uint8_t u8LastIndex = m_clLineBuffer.GetLastIndex();
-                uint8_t u8Cursor = m_clLineBuffer.GetCursorIndex();
+                const char* szSrc       = m_clLineBuffer.GetBuffer();
+                uint8_t     u8LastIndex = m_clLineBuffer.GetLastIndex();
+                uint8_t     u8Cursor    = m_clLineBuffer.GetCursorIndex();
 
                 if (u8Cursor != u8LastIndex) {
-                    for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) {
-                        m_clTerminal.WriteByte(szSrc[i]);
-                    }
+                    for (uint8_t i = u8Cursor; i <= u8LastIndex; i++) { m_clTerminal.WriteByte(szSrc[i]); }
 
                     m_clTerminal.CursorLeft(u8LastIndex - u8Cursor);
                 }
@@ -142,7 +137,7 @@ void M3Shell::InputLoop()
             }
         }
     }
-    m_clDispatcher.Execute(m_clLineBuffer.GetBuffer());
+    m_clDispatcher.Execute(&m_clTerminal, m_clLineBuffer.GetBuffer());
     m_clTerminal.WriteString("\r\n");
 }
-} //namespace Mark3
+} // namespace Mark3

@@ -13,24 +13,26 @@ See license.txt for more information
 =========================================================================== */
 
 #include "command_handler.h"
-namespace Mark3 {
-//---------------------------------------------------------------------------
-CommandHandler::CommandHandler(const char* szName_, command_action pfHandler_)
+namespace Mark3
 {
-    Set(szName_, pfHandler_);
+//---------------------------------------------------------------------------
+CommandHandler::CommandHandler(const char* szName_, command_action pfHandler_, void* pvContext_)
+{
+    Set(szName_, pfHandler_, pvContext_);
 }
 
 //---------------------------------------------------------------------------
 CommandHandler::CommandHandler()
 {
-    Set(0, 0);
+    Set(0, 0, nullptr);
 }
 
 //---------------------------------------------------------------------------
-void CommandHandler::Set(const char* szName_, command_action pfHandler_)
+void CommandHandler::Set(const char* szName_, command_action pfHandler_, void* pvContext_)
 {
     m_szCommandName = szName_;
-    m_pfHandler = pfHandler_;
+    m_pfHandler     = pfHandler_;
+    m_pvContext     = pvContext_;
 }
 
 //---------------------------------------------------------------------------
@@ -40,10 +42,10 @@ const char* CommandHandler::Name()
 }
 
 //---------------------------------------------------------------------------
-void CommandHandler::Execute(const char* szArgs_)
+void CommandHandler::Execute(TerminalIO* pclTerminalIO_, const char* szArgs_)
 {
     if (m_pfHandler != 0) {
-        m_pfHandler(szArgs_);
+        m_pfHandler(pclTerminalIO_, szArgs_, m_pvContext);
     }
 }
-} //namespace Mark3
+} // namespace Mark3
