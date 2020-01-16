@@ -32,3 +32,7 @@ target_link_libraries(terminal
     mark3
     memutil 
 )
+
+if(${mark3_arch} MATCHES "avr")
+add_subdirectory(example)
+endif()
