@@ -11,7 +11,6 @@
 Copyright (c) 2012 - 2018 m0slevin, all rights reserved.
 See license.txt for more information
 =========================================================================== */
-#pragma once
 
 #include "node_dir.h"
 
